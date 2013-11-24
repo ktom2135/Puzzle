@@ -60,7 +60,7 @@ bool HelloWorld::init()
     // position the label on the center of the screen
     pLabel->setPosition(ccp(origin.x + visibleSize.width/2,
                             origin.y + visibleSize.height - pLabel->getContentSize().height));
-
+	/*
     // add the label as a child to this layer
     this->addChild(pLabel, 1);
 
@@ -72,7 +72,36 @@ bool HelloWorld::init()
 
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
+	*/
+	CCSprite* bg = CCSprite::create("Image.png");
+
+	bg->setPosition(ccp(visibleSize.width /2 + origin.x, visibleSize.height/2 + origin.y));
+
+	CCSize bgSize = bg->getContentSize();
+	
+	float scaleY =  visibleSize.height/bgSize.height;
+	float scaleX = visibleSize.width/bgSize.width;
+
+	bg->setScaleY(scaleY);
+	bg->setScaleX(scaleX);
+	bg->setOpacity(100);
+	this->addChild(bg,0);
     
+	CCSprite* sprite = CCSprite::create("Image.png");
+
+	sprite->setPosition(ccp(visibleSize.width /2 + origin.x, visibleSize.height/2 + origin.y));
+
+	CCSize spriteSize = sprite->getContentSize();
+	
+	float spriteScaleY =  visibleSize.height/spriteSize .height;
+	float spriteScaleX = visibleSize.width/spriteSize .width;
+
+	sprite->setScaleY(spriteScaleY * 0.8);
+	sprite->setScaleX(spriteScaleX  * 0.8);
+	this->addChild(sprite,0);
+    
+
+
     return true;
 }
 
