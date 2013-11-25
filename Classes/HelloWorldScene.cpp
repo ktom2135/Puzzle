@@ -49,21 +49,6 @@ bool HelloWorld::init()
     pMenu->setPosition(CCPointZero);
     this->addChild(pMenu, 1);
 
-    /////////////////////////////
-    // 3. add your codes below...
-
-    // add a label shows "Hello World"
-    // create and initialize a label
-    
-    CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Arial", 24);
-    
-    // position the label on the center of the screen
-    pLabel->setPosition(ccp(origin.x + visibleSize.width/2,
-                            origin.y + visibleSize.height - pLabel->getContentSize().height));
-	/*
-    // add the label as a child to this layer
-    this->addChild(pLabel, 1);
-
     // add "HelloWorld" splash screen"
     CCSprite* pSprite = CCSprite::create("HelloWorld.png");
 
@@ -72,8 +57,9 @@ bool HelloWorld::init()
 
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
-	*/
-	CCSprite* bg = CCSprite::create("Image.png");
+	
+	
+    CCSprite* bg = CCSprite::create("Image.png");
 
 	bg->setPosition(ccp(visibleSize.width /2 + origin.x, visibleSize.height/2 + origin.y));
 
@@ -85,6 +71,7 @@ bool HelloWorld::init()
 	bg->setScaleY(scaleY);
 	bg->setScaleX(scaleX);
 	bg->setOpacity(100);
+	CC_SAFE_RETAIN(bg);
 	this->addChild(bg,0);
     
 	CCSprite* sprite = CCSprite::create("Image.png");
@@ -98,9 +85,28 @@ bool HelloWorld::init()
 
 	sprite->setScaleY(spriteScaleY * 0.8);
 	sprite->setScaleX(spriteScaleX  * 0.8);
-	this->addChild(sprite,0);
+	//this->addChild(sprite,0);
     
+	m_dicSplitedImages = CCDictionary::create();
+    CC_SAFE_RETAIN(m_dicSplitedImages);
 
+	m_arraySplitedImages = CCArray::create();
+	CC_SAFE_RETAIN(m_arraySplitedImages);
+
+	CCSprite *bn = CCSprite::create("Image.png");
+	int splitedWidth = bn->getContentSize().width / 4;
+	int splitedHeight = bn->getContentSize().height / 4;
+
+	for(int i=0;i< 4;i++)
+	{
+		for(int j=0;j<4;j++)
+		{
+			CCSprite * s1 = CCSprite::createWithTexture(bn->getTexture(), CCRectMake(i * splitedWidth , j* splitedHeight, splitedWidth, splitedHeight));
+			s1->setPosition(ccp(i* splitedWidth,j* splitedHeight));
+			this->addChild(s1,0);
+			//m_dicSplitedImages->setObject(s1, ccp(i* splitedWidth,i* splitedHeight));
+		}
+	}
 
     return true;
 }
