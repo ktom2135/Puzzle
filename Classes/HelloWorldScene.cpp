@@ -102,7 +102,7 @@ bool HelloWorld::init()
 		for(int j=0;j<4;j++)
 		{
 			CCSprite * s1 = CCSprite::createWithTexture(bn->getTexture(), CCRectMake(i * splitedWidth , j* splitedHeight, splitedWidth, splitedHeight));
-			s1->setPosition(ccp(i* splitedWidth,j* splitedHeight));
+			s1->setPosition(ccp(i* splitedWidth + 100,j* splitedHeight+ 200));
 			this->addChild(s1,0);
 			//m_dicSplitedImages->setObject(s1, ccp(i* splitedWidth,i* splitedHeight));
 		}
