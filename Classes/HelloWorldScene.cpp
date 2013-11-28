@@ -1,4 +1,5 @@
 #include "HelloWorldScene.h"
+#include <cstdlib>
 
 USING_NS_CC;
 
@@ -65,8 +66,8 @@ bool HelloWorld::init()
 
 	CCSize bgSize = bg->getContentSize();
 	
-	float scaleY =  visibleSize.height/bgSize.height;
-	float scaleX = visibleSize.width/bgSize.width;
+	float scaleY =  (visibleSize.height )/bgSize.height;
+	float scaleX = (visibleSize.width )/bgSize.width;
 
 	bg->setScaleY(scaleY);
 	bg->setScaleX(scaleX);
@@ -80,12 +81,9 @@ bool HelloWorld::init()
 
 	CCSize spriteSize = sprite->getContentSize();
 	
-	float spriteScaleY =  visibleSize.height/spriteSize .height;
-	float spriteScaleX = visibleSize.width/spriteSize .width;
+	float spriteScaleY =  (visibleSize.height - 200)/spriteSize .height;
+	float spriteScaleX = (visibleSize.width -100) /spriteSize .width;
 
-	sprite->setScaleY(spriteScaleY * 0.8);
-	sprite->setScaleX(spriteScaleX  * 0.8);
-	//this->addChild(sprite,0);
     
 	m_dicSplitedImages = CCDictionary::create();
     CC_SAFE_RETAIN(m_dicSplitedImages);
@@ -93,18 +91,24 @@ bool HelloWorld::init()
 	m_arraySplitedImages = CCArray::create();
 	CC_SAFE_RETAIN(m_arraySplitedImages);
 
-	CCSprite *bn = CCSprite::create("Image.png");
-	int splitedWidth = bn->getContentSize().width / 4;
-	int splitedHeight = bn->getContentSize().height / 4;
-
+	
+	int splitedWidth = sprite->getContentSize().width / 4;
+	int splitedHeight = sprite->getContentSize().height / 4;
+	
 	for(int i=0;i< 4;i++)
 	{
 		for(int j=0;j<4;j++)
 		{
-			CCSprite * s1 = CCSprite::createWithTexture(bn->getTexture(), CCRectMake(i * splitedWidth , j* splitedHeight, splitedWidth, splitedHeight));
-			s1->setPosition(ccp(i* splitedWidth + 100,j* splitedHeight+ 200));
+			CCSprite * s1 = CCSprite::createWithTexture(sprite->getTexture(), CCRectMake(i * splitedWidth , j* splitedHeight, splitedWidth, splitedHeight));
+			s1->setScaleX(spriteScaleX);
+			s1->setScaleY(spriteScaleY);
+
+			CCSize size = CCSize::CCSize(s1->getContentSize().width * spriteScaleX, s1->getContentSize().height * spriteScaleY);
+
+			float currentX = 	(i+ 0.5) * (size.width ) + 50;
+			float currentY = (abs(j - 3) + 0.5) * (size.height ) + 100 ;
+			s1->setPosition(ccp(currentX,currentY) );
 			this->addChild(s1,0);
-			//m_dicSplitedImages->setObject(s1, ccp(i* splitedWidth,i* splitedHeight));
 		}
 	}
 
